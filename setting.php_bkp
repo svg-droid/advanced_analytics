@@ -1,0 +1,18 @@
+<?php
+
+define("S3_BUCKET", "");
+
+define("S3_BUCKET_URL", "");
+//http://".S3_BUCKET.".s3.amazonaws.com/
+define("COFIG_FRONT_NAME", "/advance-project-analytics/");
+define("COFIG_ADMIN_NAME", "/advance-project-analytics/admin/");
+define("COFIG_SITE_NAME", "Advance Analytics App");
+define("COFIG_UPLOAD_PATH", "/advance-project-analytics/upload/");
+define("COFIG_DB_NAME", "try");
+define("COFIG_DB_PWD", 'Admin@123');
+define("COFIG_DB_USR", "admin");
+define("COFIG_DB_HST", "localhost");
+define("COFIG_SITE_URL", "http://vrinsoft.com/project-analytics/");
+define("COFIG_API_URL", "http://vrinsoft.com/project-analytics/api/");
+define("COFIG_FILE_UPLOAD_PATH", $_SERVER['DOCUMENT_ROOT']."/advance-project-analytics/upload/");
+define("COFIG_SITE_URL_IMG", "http://vrinsoft.com/project-analytics/upload/");

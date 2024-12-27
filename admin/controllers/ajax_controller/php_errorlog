@@ -1,0 +1,4 @@
+[08-Mar-2017 23:36:43 CST6CDT] PHP Parse error:  syntax error, unexpected ''<br/>'' (T_CONSTANT_ENCAPSED_STRING), expecting ',' or ';' in /home/webde278/public_html/project-analytics/admin/controllers/ajax_controller/comman-ajax-controller.php on line 183
+[09-Mar-2017 04:47:26 CST6CDT] PHP Parse error:  syntax error, unexpected 'echo' (T_ECHO) in /home/webde278/public_html/project-analytics/admin/controllers/ajax_controller/usertestresult-ajax-controller.php on line 167
+[06-Apr-2017 02:29:19 CST6CDT] PHP Parse error:  syntax error, unexpected '}' in /home/webde278/public_html/project-analytics/admin/controllers/ajax_controller/cms-ajax-controller.php on line 572
+[06-Apr-2017 08:53:51 CST6CDT] PHP Parse error:  syntax error, unexpected 'exit' (T_EXIT), expecting ',' or ';' in /home/webde278/public_html/project-analytics/admin/controllers/ajax_controller/cms-ajax-controller.php on line 270

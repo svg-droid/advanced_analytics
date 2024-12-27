@@ -1,0 +1,413 @@
+<?php
+	/**
+		* Template Name: KFZ Template
+		*
+		* @package WordPress
+		* @subpackage Twenty_Sixteen
+		* @since Twenty Fourteen 1.0
+	*/
+ 
+	global $wp_query;
+	$page_slug = $wp_query->query_vars['pagename'];
+	
+	/* for Setting Initial Price */
+	$menu_items = wp_get_nav_menu_items( 'main-menu' );
+	$this_item = current( wp_filter_object_list( $menu_items, array( 'object_id' => get_queried_object_id() ) ) );
+	
+	get_header();
+?>
+<div class="car-page">
+	<div class="home-page-banner">
+		<div class="banner-top-breadcrumbs">
+			<div class="container">
+				<ul class="breadcrumbs">
+					<?php 
+						if(function_exists('bcn_display'))
+						{
+							bcn_display();
+						}
+					?>					
+				</ul>	
+			</div>
+		</div>
+		<div class="container">
+			<div class="grid-row">				
+				<div class="grid-12">		
+					<div class="main-banner-right three-radio cust-banner">
+						<div class="banner-text">
+							<h1><?php the_field('banner_page_title'); ?></h1>
+							<p><?php the_field('banner_page_text'); ?></p>						
+						</div>
+						<div class="banner-right-box">
+							<div class="banner-box-white">
+								<form id="productForm">
+									<div class="form-group">
+										<?php
+											if($page_slug=='kfz-versicherung')
+											{
+												$productargs = array( 'post_type' => 'product','posts_per_page' => 50,'product_cat' => 'Kfz-Rechtsschutzversicherung', 'order' => 'ASC' );
+												$proloop = new WP_Query( $productargs );
+											
+											}
+											else if($page_slug=='reifenversicherung')
+											{
+												$productargs = array( 'post_type' => 'product','posts_per_page' => 50,'product_cat' => 'Reifenversicherung', 'order' => 'ASC' );
+												$proloop = new WP_Query( $productargs );
+											}
+											else
+											{
+												$productargs = array( );
+												$proloop = new WP_Query( $productargs );
+											}
+																		
+											while ( $proloop->have_posts() ) : $proloop->the_post();
+										?>
+										<label><?php the_title(); ?></label>
+										<?php
+											endwhile;
+											wp_reset_query();
+										?>					
+										<p>weil Fahren Freude bringen soll.</p>	
+									</div>
+									<div class="form-group">
+										<label>Schutzumfang</label>
+										<ul class="radio-group-list radio-box">
+											<li class="radio-check first-checkbox">
+												<input type="radio" id="minimal-radio-1" name="minimal-radio">
+												<label for="minimal-radio-1">BASIS (für erfahrene Fahrer)<br/><p>Rundum-Schutz</p></label>
+											</li>
+											<li class="radio-check">
+												<input type="radio" id="minimal-radio-2" name="minimal-radio" class="valid">
+												<label for="minimal-radio-2">PREMIUM-SCHUTZ (empfohlen)<br/><p>Alle Basis-Leistungen, dazu noch Schutz bei <b>Ordnungswidrigkeiten und<br/> Straftatbeständen</b></p></label>									  
+											</li>								
+										</ul>
+								 	</div>
+									<div class="clearfix"></div>
+									<br/>
+									<input type="hidden" id="initial_price" name="initial_price" value="<?php echo $this_item->attr_title; ?>" />
+									<input type="hidden" id="cart_total" name="cart_total" value="<?php echo $this_item->attr_title; ?>" />
+								</form>
+							</div>
+							<div class="banner-box-gray">
+								<?php the_field('banner_form_side_text'); ?>							
+								<div class="price-box text-color-light-gray left">								
+									<div class="_s-m-l-20">
+										<span class="font-weight-700 _s-fs-12">einmalig</span>
+										<div class="font-weight-700 _s-fs-24">
+											<div class="inner"><span id="finalprice"><?php echo $this_item->attr_title; ?></span>&nbsp;&euro;*</div>
+										</div>
+										<div class="_s-fs-10">inkl. 19% Vers.St.</div>									
+									</div>
+								</div>							
+								<div class="right cust-right">
+									<button  class="button-orange-gray"> <span class="cust-inner"><span class="button-text">Bestellen</span></span> </button>
+								</div><div class="clearfix"></div>									
+								<div class="right cust-size"><img src="<?php echo content_url().'/uploads/2016/11/allianz_logo.png' ; ?>" width="70px"></div>
+								<div class="img-text">Versichert durch</div> <div class="clearfix"></div>
+								<div class="text-color-light-gray _s-fs-12">* Wohnsitz in Deutschland Voraussetzung.</div>	
+							</div>
+						</div>						
+					</div>
+				</div>
+			</div>	
+		</div>	
+	</div>
+</div>
+<?php
+	$mid_img1 = get_field('mid_content_image_1','option');
+	$mid_mouseover_img1 = get_field('mid_content_mouseover_image_1','option');
+
+	$mid_img2 = get_field('mid_content_image_2','option');
+	$mid_mouseover_img2 = get_field('mid_content_mouseover_image_2','option');
+
+	$mid_img3 = get_field('mid_content_image_3','option');
+	$mid_mouseover_img3 = get_field('mid_content_mouseover_image_3','option');
+	
+	$mid_img4 = get_field('mid_content_image_4','option');
+	$mid_mouseover_img4 = get_field('mid_content_mouseover_image_4','option');
+?>
+<!--<section class="light-gray-bg border-bottom clearfix">
+	<div class="container">
+		<div class="grid-row">
+		<div class="grid-12 padding-top-bottom">					
+				<ul class="banner-bottom-list">
+					<li class="">
+						<img src="<?php echo $mid_img1['url']; ?>" onmouseover="this.src='<?php echo $mid_mouseover_img1['url']; ?>'" onmouseout="this.src='<?php echo $mid_img1['url']; ?>'" border="0" alt=""/>
+					</li>
+					<li class="text-hover-img">
+						<img src="<?php echo $mid_img2['url']; ?>" onmouseover="this.src='<?php echo $mid_mouseover_img2['url']; ?>'" onmouseout="this.src='<?php echo $mid_img2['url']; ?>'" border="0" alt=""/>
+						<span><?php the_field('mid_content_image_2_text','option'); ?></span>							
+					</li>
+					<li class="text-center">
+						<img src="<?php echo $mid_img3['url']; ?>" onmouseover="this.src='<?php echo $mid_mouseover_img3['url']; ?>'" onmouseout="this.src='<?php echo $mid_img3['url']; ?>'" border="0" alt=""/>							
+					</li>
+					<li class="">
+						<img src="<?php echo $mid_img4['url']; ?>" onmouseover="this.src='<?php echo $mid_mouseover_img4['url']; ?>'" onmouseout="this.src='<?php echo $mid_img4['url']; ?>'" border="0" alt=""/>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>	
+</section>-->
+<section class="border-bottom-white clearfix hundever-tab">
+	<div class="container">
+		<div class="grid-row">
+			<!--<div class="grid-12">
+				<div class="light-gray-text text-center">
+					<p><b><?php the_field('paragraph_title','option'); ?></b></p>
+					<p class="text-color-light-gray"><?php the_field('paragraph_text','option'); ?></p>
+				</div>
+			</div>-->
+			<div class="grid-12"> 
+				<div class="tab-section">
+					<h2 class="middle-heading text-center"><?php the_field('insurance_covers_title'); ?></h2>
+					<div class="parentHorizontalTab tabbing">
+						<ul class="resp-tabs-list hor_1">
+							<li>Schadensersatzansprüche</li>
+							<li>Vertrags- und Sachenrecht</li>
+							<li>Verwaltungs-und Verkehrsangelegenheiten</li>
+							
+						</ul>
+						<div class="resp-tabs-container hor_1">
+							<div>
+								<div class="tab-content">
+									<div class="tab-img">
+										<img src="images/tab/icon_shortcircuit_blue.png" class="img-responsive">
+									</div>
+									<div class="tab-text">
+										<h3> Schutz vor Diebstahl </h3>
+										<p>Die meisten Kfz-Kasko-Versicherungen decken einen Teilediebstahl leider nicht ab. Das kann bei einem Diebstahl von hochwertigen Felgen mit entsprechend teuren Reifen sehr ärgerlich sein. Die Focus-Reifenversicherung übernimmt alle anfallenden Kosten für die Wiederbeschaffung ganz ohne Selbstbeteiligung.</p>
+									</div>
+								</div>
+							</div>
+							<div>
+								<div class="tab-content">
+									<div class="tab-img">
+										<img src="images/tab/icon_display_blue.png" class="img-responsive">
+									</div>
+									<div class="tab-text">
+										<h3> Schutz vor Beschädigung  </h3>
+										<p>Ein Großteil aller Reifenschäden ist auf eingefahrene Gegenstände wie z.B. Nägel  zurückzuführen. Aber auch Beschädigungen an Reifen und Felgen durch Bordsteinkanten kommen immer häufiger vor. Mit unserer Focus Reifenversicherung schützt du deine Reifen gegen Beschädigungen solcher Art.</p>
+									</div>
+								</div>
+							</div>
+							<div>
+								<div class="tab-content">
+									<div class="tab-img">
+										<img src="images/tab/icon_display_blue.png" class="img-responsive">
+									</div>
+									<div class="tab-text">
+										<h3>Schutz vor Vandalismus   </h3>
+										<p>Auch Reifenschäden durch Vandalismus stellen in der heutigen Zeit ein wachsendes Problem dar. In der Regel sind solche Fälle nicht über die Kasko-Versicherung versichert. Doch selbst wenn dieser Schaden über eine teure Vollkaskoversicherung abgedeckt ist, lohnt sich die Abwicklung darüber meistens nicht. Mit der günstigen Focus Reifenversicherung bist du jedoch vollständig abgesichert - keine Selbstbeteiligung, keine Hochstufung, kein Risiko.</p>
+									</div>
+								</div>
+							</div>
+							<!--<div>
+								<div class="tab-content">
+									<div class="tab-img">
+										<img src="images/tab/icon_display_blue.png" class="img-responsive">
+									</div>
+									<div class="tab-text">
+										<h3> Unterstützung bei Steuerrecht </h3>
+										<p>Die Kfz-Rechtsschutzversicherung von Schutzklick unterstützt dich dabei, deine rechtlichen Interessen im Zusammenhang mit Steuern und Abgaben vor deutschen Finanz- und Verwaltungsgerichten wahrzunehmen. </p>
+										<p>Ein Beispiel hier ist der Einspruch gegen eine zu hohe Kfz-Steuer-Einstufung, obwohl dir ein günstigerer Tarif aufgrund einer Katalysatornachrüstung zustehen würde. Dein Einspruch wird jedoch abgelehnt und es folgt ein Gerichtsverfahren. Die Kfz-Versicherung von Schutzklick übernimmt sämtliche mit diesem Verfahren verbundenen Kosten.</p>
+									</div>
+								</div>
+							</div>
+							<div>
+								<div class="tab-content">
+									<div class="tab-img">
+										<img src="images/tab/icon_display_blue.png" class="img-responsive">
+									</div>
+									<div class="tab-text">
+										<h3>  Schutz vor Straftatbeständen</h3>
+										<p>Du wirst beispielsweise wegen fahrlässiger Körperverletzung angeklagt, weil du einen Fußgänger beim Überqueren eines Zebrastreifens mit deinem Pkw gestreift hast. Die Kfz-Rechtsschutz von Schutzklick übernimmt sämtliche Kosten für deine Verteidigung, falls dir ein verkehrsrechtliches oder ein fahrlässiges strafrechtliches Vergehen vorgeworfen wird.</p>
+									</div>
+								</div>
+							</div>
+							<div>
+								<div class="tab-content">
+									<div class="tab-img">
+										<img src="images/tab/icon_display_blue.png" class="img-responsive">
+									</div>
+									<div class="tab-text">
+										<h3> Schutz vor Ordnungswidrigkeiten</h3>
+										<p>Dir wird vorgeworfen, die Geschwindigkeit außerhalb einer geschlossenen Ortschaft überschritten zu haben. Da dies deiner Meinung nach nicht der Wahrheit entspricht und auch das polizeiliche Beweisfoto keine eindeutige Identifizierung zulässt, erhebt dein Rechtsanwalt Einspruch gegen diesen Bußgeldbescheid ein. Die Kfz-Rechtsschutzversicherung von Schutzklick übernimmt sämtliche Kosten für deine Verteidigung, falls dir eine Ordnungswidrigkeit vorgeworfen wird.</p>
+									</div>
+								</div>
+							</div>-->
+						</div>
+					</div>
+					<div class="cust-main-ul">
+						<?php the_field('text_under_tabs'); ?>
+					</div>
+				</div>
+			</div>
+			<!--<div class="grid-12"> 
+				<section class="newsletter-section">
+					<h2 class="middle-heading text-center">Das könnte dich auch interessieren</h2>
+					<div class="main-newsletter">
+						<div class="newsletter-bg">
+							<div class="newsletter-button-box">
+								<h3>Newsletter abonnieren</h3>
+								<h3>5% Rabatt sichern</h3>
+								<button class="btn button btn-hover-orange button-white">Jetzt abonnieren</button>
+							</div>
+						</div>
+						<div class="newsletter-link">
+							<ul>	
+								<li>Beliebte Produkte:</li>
+								<li><a href="#">Handyversicherung</a></li>
+								<li><a href="#">iPhone Versicherung</a></li>
+								<li><a href="#">Tablet Versicherung</a></li>
+								<li><a href="#">iPad Versicherung</a></li>
+								<li><a href="#">Laptop Versicherung</a></li>
+								<li><a href="#">Fahrradversicherung</a></li>	
+								
+							</ul>
+						</div>
+					</div>
+				</section>
+			</div>-->
+			<div class="grid-12 margin-bottom-40 border-bottom-white">
+				<div class="middle-section">
+					<h2 class="middle-heading text-center">
+						<?php the_field('guidence_title'); ?>
+					</h2>
+					<?php
+						$post_img1 = get_field('post_1_image');
+						$post_img2 = get_field('post_2_image');
+						$post_img3 = get_field('post_3_image');
+						$post_img4 = get_field('post_4_image');
+					?>										
+					<div class="grid-row">
+						<div class="grid-6">
+							<div class="middle-main">
+								<div class="middle-img">
+									<img src="<?php echo $post_img1['url']; ?>"  class=""/>
+								</div>
+								<div class="middle-text">
+									<h3 class="medium-heading-blue"><?php the_field('post_1_title'); ?></h3>
+									<p><?php the_field('post_1_description'); ?></p>
+								</div>
+							</div>
+						</div>
+						<div class="grid-6">
+							<div class="middle-main">
+								<div class="middle-img">
+									<img src="<?php echo $post_img2['url']; ?>"  class=""/>
+								</div>
+								<div class="middle-text">
+									<h3 class="medium-heading-blue"><?php the_field('post_2_title'); ?></h3>
+									<p><?php the_field('post_2_description'); ?></p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="grid-row">	
+						<div class="grid-6">
+							<div class="middle-main">
+								<div class="middle-img">
+									<img src="<?php echo $post_img3['url']; ?>"  class=""/>
+								</div>
+								<div class="middle-text">
+									<h3 class="medium-heading-blue"><?php the_field('post_3_title'); ?></h3>
+									<p><?php the_field('post_3_description'); ?></p>
+								</div>
+							</div>
+						</div>
+						<div class="grid-6">
+							<div class="middle-main">
+								<div class="middle-img">
+									<img src="<?php echo $post_img4['url']; ?>"  class=""/>
+								</div>
+								<div class="middle-text">
+									<h3 class="medium-heading-blue"><?php the_field('post_4_title'); ?></h3>
+									<p><?php the_field('post_4_description'); ?></p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>				
+			</div>
+		</div>
+	</div>	
+</section>
+<?php
+	$step1img = get_field('step_1_image');
+	$step2img = get_field('step_2_image');
+	$step3img = get_field('step_3_image');
+?>
+<section class="dark-gray-bg images-style">
+	<div class="container text-center">			
+		<h2 class=""><?php the_field('mid_content_3_title'); ?></h2>
+		<p class="margin-bottom-40"><?php the_field('mid_content_3_description'); ?></p>
+		<div class="grid-row">
+			<div class="grid-4">	
+				<h3 class="_s-medium-heading-blue _s-fs-16 text-center"><?php the_field('step_1_title'); ?></h3>
+				<img src="<?php echo $step1img['url']; ?>" class="img-responsive" />
+				<p><?php the_field('step_1_description'); ?></p>					
+			</div>
+			<div class="grid-4">		
+				<h3 class="_s-medium-heading-blue _s-fs-16 text-center"><?php the_field('step_2_title'); ?></h3>
+				<img src="<?php echo $step2img['url']; ?>" class="img-responsive" />
+				<p><?php the_field('step_2_description'); ?></p>			
+			</div>
+			<div class="grid-4">					
+				<h3 class="_s-medium-heading-blue _s-fs-16 text-center"><?php the_field('step_3_title'); ?></h3>
+				<img src="<?php echo $step3img['url']; ?>" class="img-responsive" />
+				<p><?php the_field('step_3_description'); ?></p>			
+			</div>
+		</div>
+	</div>
+</section>
+<section class="white-section">
+	<div class="container">
+		<div class="grid-row">
+			<div class="grid-12">	
+				<h2 class="middle-heading text-center"><?php the_field('faqs_title'); ?></h2>
+				<div class="inner-gray-heading">
+				<?php
+   					global $wp_query;
+   					$page_slug = $wp_query->query_vars['pagename'];
+   					
+   					if($page_slug=='kfz-versicherung')
+   					{
+   						$args = array('post_type'=>'faqs','category_name' =>'KFZ versicherung','order'=>'ASC');
+   					}
+
+   					if($page_slug=='reifenversicherung')
+   					{
+   						$args = array('post_type'=>'faqs','category_name' =>'Reifenversicherung','order'=>'ASC');
+					}
+	
+					$the_query = new WP_Query( $args );
+					while ( $the_query->have_posts() ) : $the_query->the_post();
+				?>
+					<h3><?php the_title(); ?></h3>
+					<p><?php the_content(); ?></p>
+				<?php 
+					endwhile;
+				?>
+				<?php wp_reset_postdata(); ?>
+				</div>				
+			</div>
+		</div>	
+	</div>
+</section>
+<section class="question-box-bg">
+	<div class="container">
+		<div class="grid-row">
+			<div class="grid-6">	
+				<h2><?php the_field('bottom_title','option'); ?></h2>	
+				<p><?php the_field('bottom_description','option'); ?></p>	
+				<div class="blue-button">
+					<a class="text-shadow" href="tel:<?php the_field('bottom_phone','option'); ?>" ><?php the_field('bottom_phone','option'); ?></a>
+				</div>
+			</div>
+		</div>	
+	</div>
+</section>
+<?php
+	get_footer();
+?>
